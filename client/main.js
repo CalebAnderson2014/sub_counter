@@ -9,7 +9,8 @@ import App from "./components/App";
 
 import { fetchAllChannels } from "./models/channels.js";
 
-fetchAllCards().then(data => {
+fetchAllChannels().then(data => {
+  console.log(data)
   ReactDOM.render(<App channels={data}/>, document.getElementById("app"));
 });
 // Render that component to the DOM!

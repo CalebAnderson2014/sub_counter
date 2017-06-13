@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
-var ChannelModel = require("../../db/controllers/channel.js");
+var ChannelModel = require("../../db/models/channel.js");
 var mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/cardstone');
+mongoose.connect('mongodb://localhost/sub_count');
 // define the home page route
 router.get("/", function(req, res) {
   ChannelModel.find({}, function(err, data) {
