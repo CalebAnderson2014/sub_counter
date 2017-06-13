@@ -9,8 +9,9 @@ exports.insert = function(name) {
   Channel.create(name);
 };
 
-exports.addNewSub = function(channelName, username) {
-  var user = new User({ name: username });
+exports.addSub = function(channelName, username, months) {
+  var months = months || 0;
+  var user = new User({ name: username, months: months });
   var existingUser;
   var query = { name: channelName };
   return user.validate()

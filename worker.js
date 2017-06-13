@@ -37,8 +37,16 @@ client.connect();
 
 client.on("subscription", function (channel, username, method, message, userstate) {
     console.log(username + ' has subbed to ' + channel)
-    ChannelModel.addNewSub(channel, username)
+    ChannelModel.addSub(channel, username)
       .then(console.log)
+});
+
+client.on("resub", function (channel, username, months, message, userstate, methods) {
+    console.log(username + ' has ' + months + ' resubbed to ' + channel )
+    console.log(methods)
+    ChannelModel.addSub(channel, username, months)
+      .then(console.log)
+      .catch(console.log)
 });
 
 client.on("roomstate", function (channel, state) {

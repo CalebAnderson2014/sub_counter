@@ -8,7 +8,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  channels: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Channel' }]
+  months: {
+    type: Number,
+    required: true
+  },
+  channels: [
+    { type: mongoose.Schema.Types.ObjectId, ref: 'Channel' }
+  ]
 }, {timestamps: true})
 
 const UserModel = mongoose.model('User', userSchema);
