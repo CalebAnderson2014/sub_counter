@@ -1,9 +1,12 @@
 var express = require('express');
 var path = require('path');
 var browserify = require('browserify-middleware');
+var cors = require('cors');
 var app = express();
 var cardAPI = require('./routers/card_router.js')
 var routes = express.Router();
+
+app.use(cors());
 
 routes.use(express.static(path.join(__dirname, "../client/public")));
 
