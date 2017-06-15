@@ -5,9 +5,24 @@ exports.findAll = function() {
   return Channel.find({});
 };
 
+exports.model = function() {
+  return User
+}
+
 exports.insert = function(name) {
   Channel.create(name);
 };
+
+exports.getChannelSubs = function(channelName) {
+  return Channel.findOne({ name: channelName })
+    .populate('subscribers')
+    .then((ch) => {
+      return ch.subscribers
+    })
+
+};
+
+exports.findSharedSubs = function() {};
 
 exports.addSub = function(channelName, username, months) {
   var months = months || 0;
@@ -19,40 +34,20 @@ exports.addSub = function(channelName, username, months) {
       return user.save()
     })
     .catch(err => {
-      console.log()
       if(err.message.includes('dup key')) {
         return User.find({ name: username })
       }
       throw new Error('something bad')
     })
-    .then((u) => {
-      existingUser = u
-      return
-    })
     .then((d) => {
-      console.log(d)
-      return Channel.update(query, { $push: { subscribers: user }, $inc: { subcount: 1}})
+      return Channel.update(query, { $push: { subscribers: user._id }, $inc: { subcount: 1}})
     })
     .then((ch) => {
-
-      return Channel.find(query)
+      return Channel.findOne(query)
     })
     .then((ch) => {
-      console.log('should be our channel ', ch);
-      return User.update({ name: username }, { $push: {channels: ch }})
+      return User.update({ name: username }, { $push: {channels: ch._id }})
     })
-  
-
-    // .then(() => Channel.findOne({name: channelName}))
-    // .then(channel => {
-
-    //   console.log('~~~~~~~~~~~~ ', channel.get('subscribers'))
-    //   var oldSubCount = channel.get('subcount')
-    //   var oldSubs = channel.get('subscribers')
-    //   oldSubs.push({name: username})
-    //   console.log('new stuff ', oldSubCount + 1, oldSubs)
-    //   return channel.update({subcount: channel.get('subcount') + 1, subscribers: oldSubs})
-    // })
     .catch(console.log)
 }
 
@@ -64,7 +59,6 @@ exports.addNewChannel = function(name) {
   }
   return Channel.find({name: channel.name})
     .then((row) => {
-      console.log('row ', row)
       if(row.length > 0) {
         return
       }

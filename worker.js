@@ -8,7 +8,7 @@ const options = {
     reconnect: true,
     secure: true
   },
-  channels: ["#drdisrespectlive", "#lirik", "#imaqtpie", "#a_seagull", "#summit1g", "#savjz", "#greekgodx"]
+  channels: ["#timthetatman", "#drdisrespectlive", "#lirik", "#imaqtpie", "#a_seagull", "#summit1g", "#savjz", "#greekgodx"]
 };
 const ChannelModel = require('./db/controllers/channel.js');
 const UserModel = require('./db/controllers/user.js');
