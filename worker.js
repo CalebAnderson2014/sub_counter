@@ -8,13 +8,13 @@ const options = {
     reconnect: true,
     secure: true
   },
-  channels: ["#timthetatman", "#drdisrespectlive", "#lirik", "#imaqtpie", "#a_seagull", "#summit1g", "#savjz", "#greekgodx"]
+  channels: ["#day9tv", "#lassiz", "#hsdogdog", "#goldglove", "#joshog", "#forsenlol", "#chu8", "#timthetatman", "#drdisrespectlive", "#lirik", "#imaqtpie", "#a_seagull", "#summit1g", "#savjz", "#greekgodx"]
 };
 const ChannelModel = require('./db/controllers/channel.js');
 const UserModel = require('./db/controllers/user.js');    
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/sub_count');
+mongoose.connect('mongodb://localhost/sub_count6-15-17');
 
 const client = new tmi.client(options);
 

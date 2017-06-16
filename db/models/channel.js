@@ -11,7 +11,8 @@ const channelSchema = new mongoose.Schema({
   },
   subcount: Number,
   subscribers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
-});
+}, {timestamps: true});
+
 const ChannelModel = mongoose.model('Channel', channelSchema);
 
 module.exports = ChannelModel;
