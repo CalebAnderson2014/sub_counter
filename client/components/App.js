@@ -13,6 +13,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
+        <h2>Streamers</h2>
         <ChannelList channels={this.props.channels}/>
       </div>
     );
