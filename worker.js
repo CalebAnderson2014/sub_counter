@@ -11,21 +11,7 @@ const options = {
   channels: ["#timthetatman", "#drdisrespectlive", "#lirik", "#imaqtpie", "#a_seagull", "#summit1g", "#savjz", "#greekgodx"]
 };
 const ChannelModel = require('./db/controllers/channel.js');
-const UserModel = require('./db/controllers/user.js');
-
-// User.create({name: 'tester'})
-//   .then(() => {
-//     return User.exists({name: 'tester'})
-//   })
-//   .then(data => console.log(data));
-// ChannelModel.addNewChannel('#test')
-//   .then(() => {
-//     return ChannelModel.addNewSub('#test', 'testerson')
-//       .then(console.log)
-//       .then(UserModel.findAll)
-//       .then(console.log)
-//   })
-    
+const UserModel = require('./db/controllers/user.js');    
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/sub_count');
@@ -39,6 +25,7 @@ client.on("subscription", function (channel, username, method, message, userstat
     console.log(username + ' has subbed to ' + channel)
     ChannelModel.addSub(channel, username)
       .then(console.log)
+      .catch(console.log)
 });
 
 client.on("resub", function (channel, username, months, message, userstate, methods) {

@@ -7,7 +7,7 @@ const ChannelModel = require('../db/models/channel.js');
 const ChannelController = require('../db/controllers/channel.js');
 mongoose.connect('mongodb://localhost/subcount_test'); 
 
-describe('Channel model', function() {
+describe('Integration tests', function() {
   before(function(done){    
     ChannelModel.create(dummyData, function(err, rows){
       if(err) {
@@ -18,24 +18,26 @@ describe('Channel model', function() {
     });  
   });
 
-  it('should be invalid if required fields are empty', function(done) {
-    const channel = new ChannelModel();
+  describe('Channel model', function() {
+    it('should be invalid if required fields are empty', function(done) {
+      const channel = new ChannelModel();
 
-    channel.validate(function(err) {
-      expect(err.errors).to.exist;
-      done();
+      channel.validate(function(err) {
+        expect(err.errors).to.exist;
+        done();
+      });
     });
-  });
 
-  it('does not add duplicate channel', function(done) {
-    const goodChannel = new ChannelModel(dummyChannel);
+    it('does not add duplicate channel', function(done) {
+      const goodChannel = new ChannelModel(dummyChannel);
 
-    goodChannel.save(function(err) {
-      expect(err.message).to.include('duplicate key');
-      ChannelModel.find(function(err, channels) {
-        expect(channels.length).to.equal(dummyData.length);
+      goodChannel.save(function(err) {
+        expect(err.message).to.include('duplicate key');
+        ChannelModel.find(function(err, channels) {
+          expect(channels.length).to.equal(dummyData.length);
+        })
+        done();
       })
-      done();
     })
   })
   describe('Channel controller', function() {
@@ -76,6 +78,7 @@ describe('Channel model', function() {
         ChannelController.getChannelSubs('#imaqtpie')
           .then((subs) => {
             expect(subs).to.be.an('array')
+            expect(subs[0]).to.be.an('object')
             done();
           })
       })

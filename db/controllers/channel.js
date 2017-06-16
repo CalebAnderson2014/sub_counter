@@ -1,6 +1,7 @@
 'use strict';
 const Channel = require('../models/channel.js');
 const User = require('../models/user.js');
+
 exports.findAll = function() {
   return Channel.find({});
 };
