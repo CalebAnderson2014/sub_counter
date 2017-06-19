@@ -89,6 +89,28 @@ describe('Integration tests', function() {
         done()
       })
     })
+    describe('getNewSubs', function() {
+      it('should be a function', function(done) {
+        expect(ChannelController.getNewSubs).to.be.a('function')
+        done()
+      })
+      it('should, given a channel name, return an array of user objects that just subbed', function(done) {
+        ChannelController.addSub('#drdisrespectlive', 'newHere')
+          .then(() => {
+            return ChannelController.getNewSubs('#drdisrespectlive')
+          })
+          .then((subs) => {
+
+            expect(subs).to.be.an('array')
+            console.log(subs)
+            const subNames = subs.map(sub => sub.name).filter(name => name);
+            console.log('subNames ', subNames)
+            // expect(subsNames).to.include('newHere');
+            done()
+          })
+      })
+
+    })
 
   });
   after(function(done){    

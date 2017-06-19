@@ -23,6 +23,22 @@ exports.getChannelSubs = function(channelName) {
 
 };
 
+exports.getNewSubs = function(channelName) {
+  return new Promise((resolve, reject) => {
+    Channel.findOne({ name: channelName })
+    .populate({
+      path: 'subscribers',
+      match: { months: 0}
+    })
+    .exec((err, channel) => {
+      if(err) {
+        reject(err)
+      }
+      resolve(channel.subscribers)
+    })
+  })
+};
+
 exports.findSharedSubs = function() {};
 
 exports.addSub = function(channelName, username, months) {
