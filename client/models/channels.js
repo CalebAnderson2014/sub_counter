@@ -7,6 +7,6 @@ export function fetchAllChannels() {
 
 export function channelsNewSubs(channelName) {
   const noPound = channelName.split('').filter(char => char !== '#').join('')
-  return fetch('http://localhost:4000/channels/' + noPound)
+  return fetch('http://159.203.103.19:4000/channels/' + noPound)
     .then(data => data.json())
 }
