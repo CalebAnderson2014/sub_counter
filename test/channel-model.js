@@ -8,13 +8,13 @@ const ChannelController = require('../db/controllers/channel.js');
 mongoose.connect('mongodb://localhost/subcount_test'); 
 
 describe('Integration tests', function() {
-  before(function(done){    
-    ChannelModel.create(dummyData, function(err, rows){
-      if(err) {
+  before(function(done) {    
+    ChannelModel.create(dummyData, function(err, rows) {
+      if (err) {
         console.log(err);
         throw err;
       }
-      done()   
+      done();   
     });  
   });
 
@@ -35,17 +35,17 @@ describe('Integration tests', function() {
         expect(err.message).to.include('duplicate key');
         ChannelModel.find(function(err, channels) {
           expect(channels.length).to.equal(dummyData.length);
-        })
+        });
         done();
-      })
-    })
-  })
+      });
+    });
+  });
   describe('Channel controller', function() {
     describe('addSub', function() {
       it('should be a function', function(done) {
-        expect(ChannelController.addSub).to.be.a('function')
-        done()
-      })
+        expect(ChannelController.addSub).to.be.a('function');
+        done();
+      });
       it('should add a user to a channels subscribers', function(done) {
         ChannelController.addSub('#imaqtpie', 'testerson', 2)
           .then(() => {
@@ -53,67 +53,67 @@ describe('Integration tests', function() {
               .populate('subscribers')
               .exec((err, asd) => {
                 expect(asd.subscribers[0].name).to.equal('testerson');
-                done()
-              })
-          })
-      })
+                done();
+              });
+          });
+      });
       it('should add channel to the user', function(done) {
         ChannelController.addSub('#drdisrespectlive', 'testerson')
           .then(() => {
             UserModel.findOne({name: 'testerson'})
               .populate('channels')
               .exec((err, user) => {
-                expect(user.channels[1].name).to.equal('#drdisrespectlive')
-                done()
-              })
-          })
-      })
-    })
+                expect(user.channels[1].name).to.equal('#drdisrespectlive');
+                done();
+              });
+          });
+      });
+    });
     describe('getChannelSubs', function() {
       it('should be a function', function(done) {
-        expect(ChannelController.getChannelSubs).to.be.a('function')
-        done()
-      })
+        expect(ChannelController.getChannelSubs).to.be.a('function');
+        done();
+      });
       it('should return an array of subs', function(done) {
         ChannelController.getChannelSubs('#imaqtpie')
           .then((subs) => {
-            expect(subs).to.be.an('array')
-            expect(subs[0]).to.be.an('object')
+            expect(subs).to.be.an('array');
+            expect(subs[0]).to.be.an('object');
             done();
-          })
-      })
-    })
+          });
+      });
+    });
     describe('findSharedSubs', function() {
       it('should be a function', function(done) {
-        expect(ChannelController.findSharedSubs).to.be.a('function')
-        done()
-      })
-    })
+        expect(ChannelController.findSharedSubs).to.be.a('function');
+        done();
+      });
+    });
     describe('getNewSubs', function() {
       it('should be a function', function(done) {
-        expect(ChannelController.getNewSubs).to.be.a('function')
-        done()
-      })
+        expect(ChannelController.getNewSubs).to.be.a('function');
+        done();
+      });
       it('should, given a channel name, return an array of user objects that just subbed', function(done) {
         ChannelController.addSub('#drdisrespectlive', 'newHere')
           .then(() => {
-            return ChannelController.getNewSubs('#drdisrespectlive')
+            return ChannelController.getNewSubs('#drdisrespectlive');
           })
           .then((subs) => {
-            expect(subs).to.be.an('array')
+            expect(subs).to.be.an('array');
             var subNames = subs.map(sub => sub.name).filter(name => name);
             expect(subNames).to.include('newHere');
-            expect(subs.every(function(sub) { return sub.months === 0 })).to.be.true
-            done()
-          })
-      })
-    })
+            expect(subs.every(function(sub) { return sub.months === 0; })).to.be.true;
+            done();
+          });
+      });
+    });
   });
-  after(function(done){    
+  after(function(done) {    
     ChannelModel.remove({}, function() {
       UserModel.remove({}, function() {
         done();    
-      })
+      });
     });  
   }); 
 });

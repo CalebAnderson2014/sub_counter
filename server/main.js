@@ -3,16 +3,16 @@ var path = require('path');
 var browserify = require('browserify-middleware');
 var cors = require('cors');
 var app = express();
-var cardAPI = require('./routers/card_router.js')
+var cardAPI = require('./routers/card_router.js');
 var routes = express.Router();
 
 app.use(cors());
 
-routes.use(express.static(path.join(__dirname, "../client/public")));
+routes.use(express.static(path.join(__dirname, '../client/public')));
 
 routes.get('/app-bundle.js',
- browserify('./client/main.js', {
-    transform: [ [ require('babelify'), { presets: ["es2015", "react"] } ] ]
+  browserify('./client/main.js', {
+    transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
   })
 );
 
@@ -21,4 +21,4 @@ app.use('/', routes);
 
 var port = process.env.PORT || 4000;
 app.listen(port);
-console.log("Listening on localhost:" + port);
+console.log('Listening on localhost:' + port);

@@ -1,7 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-const ChannelModel = require('./channel.js')
+const ChannelModel = require('./channel.js');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
   channels: [
     { type: mongoose.Schema.Types.ObjectId, ref: 'Channel' }
   ]
-}, {timestamps: true})
+}, {timestamps: true});
 
 const UserModel = mongoose.model('User', userSchema);
 

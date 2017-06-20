@@ -1,6 +1,6 @@
-import React from "react";
-import ChannelList from "./ChannelList";
-import * as ChannelModel from "../models/channels.js";
+import React from 'react';
+import ChannelList from './ChannelList';
+import * as ChannelModel from '../models/channels.js';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -14,11 +14,11 @@ export default class App extends React.Component {
     Promise.all(this.props.channels.map((ch) => ChannelModel.channelsNewSubs(ch.name)))
       .then((arr) => {
         const newState = this.state.channels.map((channel, i) => {
-          channel.recent = arr[i]
-          return channel
-        })
-        this.setState({ channels: newState })
-      })
+          channel.recent = arr[i];
+          return channel;
+        });
+        this.setState({ channels: newState });
+      });
   }
   render() {
     return (
