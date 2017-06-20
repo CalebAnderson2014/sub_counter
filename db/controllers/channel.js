@@ -32,7 +32,10 @@ exports.getNewSubs = function(channelName) {
     .populate({
       path: 'subscribers',
       match: { months: 0 },
-      options: { limit: 5 }
+      options: {
+        limit: 5,
+        sort: '-createdAt'
+      }
     })
     .exec((err, channel) => {
       if(err) {
