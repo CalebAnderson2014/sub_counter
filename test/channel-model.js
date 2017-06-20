@@ -100,18 +100,14 @@ describe('Integration tests', function() {
             return ChannelController.getNewSubs('#drdisrespectlive')
           })
           .then((subs) => {
-
             expect(subs).to.be.an('array')
-            console.log(subs)
-            const subNames = subs.map(sub => sub.name).filter(name => name);
-            console.log('subNames ', subNames)
-            // expect(subsNames).to.include('newHere');
+            var subNames = subs.map(sub => sub.name).filter(name => name);
+            expect(subNames).to.include('newHere');
+            expect(subs.every(function(sub) { return sub.months === 0 })).to.be.true
             done()
           })
       })
-
     })
-
   });
   after(function(done){    
     ChannelModel.remove({}, function() {

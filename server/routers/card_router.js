@@ -1,11 +1,13 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
-var ChannelModel = require("../../db/models/channel.js");
+var ChannelModel = require('../../db/models/channel.js');
+var ChannelController = require('../../db/controllers/channel.js');
 var mongoose = require('mongoose')
 
 mongoose.connect('mongodb://localhost/sub_count6-15-17');
 // define the home page route
-router.get("/", function(req, res) {
+router.get('/', function(req, res) {
+  console.log(req.url)
   ChannelModel.
     find({}).
     sort('-subcount').
@@ -14,9 +16,16 @@ router.get("/", function(req, res) {
         console.log(err)
         res.status(500).send()
       }
-      console.log(data)
       res.send(JSON.stringify(data))
     });
 });
 
+router.get('/:channelName', function(req, res) {
+  console.log('channel name: ', req.params.channelName)
+  ChannelController.getNewSubs('#' + req.params.channelName)
+    .then((subs) => {
+      res.send(JSON.stringify(subs))
+    })
+    .catch(res.error)
+})
 module.exports = router;
