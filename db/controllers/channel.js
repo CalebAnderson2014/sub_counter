@@ -34,7 +34,7 @@ exports.getNewSubs = function(channelName) {
       match: { months: 0 },
       options: {
         limit: 15,
-        sort: { 'created_at': -1 }
+        sort: { 'createdAt': -1 }
       } 
     })
     .exec((err, channel) => {
