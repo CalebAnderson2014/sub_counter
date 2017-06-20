@@ -33,9 +33,9 @@ exports.getNewSubs = function(channelName) {
       path: 'subscribers',
       match: { months: 0 },
       options: {
-        limit: 5,
-        sort: '-createdAt'
-      }
+        limit: 15,
+        sort: { 'created_at': -1 }
+      } 
     })
     .exec((err, channel) => {
       if(err) {
