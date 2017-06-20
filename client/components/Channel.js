@@ -34,7 +34,7 @@ export default class Channel extends React.Component {
 const RecentList = ({ recentSubs = [] }) => (
   <ul>
     {recentSubs.map((recent) => {
-      return <li key={recent._id}>{recent.name} subbed at {moment(recent.createdAt).format("dd, MMMM Do, h:mm:ss a")}</li>
+      return <li key={recent._id}>{recent.name} subbed at {moment(recent.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}</li>
     })}
   </ul>
 )
