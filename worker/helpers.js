@@ -13,7 +13,8 @@ exports.handleReSubEvent = function(channel, username, months, message, userstat
   addSub(channel, username, months, userstate)
 };
 
-function addSub(channel, username, months = 0, userstate) {
+function addSub(channel, username, months, userstate) {
+  var months = months || 0;
   var user = { name: username, months: months };
   var query = { name: channel };
   var subscription = {
@@ -51,7 +52,8 @@ exports.checkStatus = function(channel, state) {
     .catch(console.log)
 };
 
-exports.handleCheer = function(channel, userstate, message = '') {
+exports.handleCheer = function(channel, userstate, message) {
+  var message = message || '';
   var user = { name: userstate['display-name'] }
   console.log('our user: ', user)
   User.findOneOrCreate(user)
