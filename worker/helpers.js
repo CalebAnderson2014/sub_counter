@@ -56,7 +56,7 @@ exports.handleCheer = function(channel, userstate, message) {
   var message = message || '';
   var user = { name: userstate['display-name'] }
   console.log('our user: ', user)
-  User.findOneOrCreate({ name: user.name })
+  User.findOneOrCreate(user.name)
     .then((res) => {
       user = res;
       return Channel.findOne({ name: channel })
