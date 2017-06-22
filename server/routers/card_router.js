@@ -4,7 +4,7 @@ var ChannelModel = require('../../db/models/channel.js');
 var ChannelController = require('../../db/controllers/channel.js');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/sub_count_test');
+mongoose.connect('mongodb://localhost/sub_count2');
 // define the home page route
 router.get('/', function(req, res) {
   console.log(req.url);

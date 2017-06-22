@@ -6,8 +6,9 @@ import * as ChannelModel from '../models/channels.js'
 export default class AnalyticsPanel extends React.Component {
   constructor() {
     super()
+    //{date: "5/22/2017", count: 10}, {date: "5/21/2017", count: 15}, {date: "5/20/2017", count: 13}
     this.state = {
-      data: [{date: "5/22/2017", count: 10}, {date: "5/21/2017", count: 15}, {date: "5/20/2017", count: 13}]
+      data: []
     }
   }
 
@@ -37,7 +38,7 @@ export default class AnalyticsPanel extends React.Component {
             results = results || []
           }
         }
-        // this.setState({ data: results }, () => console.log(this.state.data))
+        this.setState({ data: results }, () => console.log(this.state.data))
       })
   }
   render() {

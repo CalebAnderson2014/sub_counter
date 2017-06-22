@@ -13,7 +13,7 @@ const options = {
 const helpers = require('./helpers.js');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/sub_count_test');
+mongoose.connect('mongodb://localhost/sub_count2');
 
 const client = new tmi.client(options);
 
