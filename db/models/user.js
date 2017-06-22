@@ -8,9 +8,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  subscriptions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Subscriptions' }],
   months: {
-    type: Number,
-    required: true
+    type: Number
   },
   channels: [
     { type: mongoose.Schema.Types.ObjectId, ref: 'Channel' }
@@ -18,5 +18,10 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 const UserModel = mongoose.model('User', userSchema);
-
+UserModel.findOneOrCreate = function(username) {
+  return UserModel.find({ name: username }).limit(1)
+    .then((user) => {
+      return !!user ? UserModel.create({name: username}) : user;
+    })
+}
 module.exports = UserModel;

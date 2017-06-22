@@ -20,10 +20,7 @@ exports.getChannelSubs = function(channelName) {
     .then((ch) => {
       return ch.subscribers;
     });
-
 };
-
-
 
 exports.getNewSubs = function(channelName) {
   console.log('getting new subs for: ', channelName);
@@ -31,7 +28,6 @@ exports.getNewSubs = function(channelName) {
     Channel.findOne({ name: channelName })
       .populate({
         path: 'subscribers',
-        match: { months: 0 },
         options: {
           limit: 15,
           sort: { 'createdAt': -1 }
@@ -66,45 +62,3 @@ exports.getAllNewest5Subs = function() {
 
 exports.findSharedSubs = function() {};
 
-exports.addSub = function(channelName, username, months) {
-  var months = months || 0;
-  var user = new User({ name: username, months: months });
-  var existingUser;
-  var query = { name: channelName };
-  return user.validate()
-    .then(() => {
-      return user.save();
-    })
-    .catch(err => {
-      if (err.message.includes('dup key')) {
-        return User.find({ name: username });
-      }
-      throw new Error('something bad');
-    })
-    .then((d) => {
-      return Channel.update(query, { $push: { subscribers: user._id }, $inc: { subcount: 1}});
-    })
-    .then((ch) => {
-      return Channel.findOne(query);
-    })
-    .then((ch) => {
-      return User.update({ name: username }, { $push: {channels: ch._id }});
-    })
-    .catch(console.log);
-};
-
-exports.addNewChannel = function(name) {
-  var channel = {
-    name: name,
-    subcount: 0,
-    subscribers: []
-  };
-  return Channel.find({name: channel.name})
-    .then((row) => {
-      if (row.length > 0) {
-        return;
-      }
-      return Channel.create(channel);
-    })
-    .catch(console.log);
-};
