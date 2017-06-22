@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-const SERVER_URL = 'http://localhost:4000/channels/';
+const SERVER_URL = 'http://159.203.103.19:4000/channels/';
 
 export function fetchAllChannels() {
   return fetch(SERVER_URL)
