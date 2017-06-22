@@ -19,9 +19,9 @@ const userSchema = new mongoose.Schema({
 
 const UserModel = mongoose.model('User', userSchema);
 UserModel.findOneOrCreate = function(username) {
-  return UserModel.find({ name: username }).limit(1)
+  return UserModel.findOne({ name: username })
     .then((user) => {
-      return !!user ? UserModel.create({name: username}) : user;
+      return !!user ? user : UserModel.create({name: username});
     })
 }
 module.exports = UserModel;
