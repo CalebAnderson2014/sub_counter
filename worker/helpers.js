@@ -1,6 +1,7 @@
 const Channel = require('../db/models/channel.js');
 const User = require('../db/models/user.js');
 const Cheer = require('../db/models/cheer.js');
+const Subscription = require('../db/models/subscription.js');
 
 exports.handleSubEvent = function(channel, username, method, message, userstate) {
   console.log('our userstate: ', arguments)
@@ -15,16 +16,31 @@ exports.handleReSubEvent = function(channel, username, months, message, userstat
 function addSub(channel, username, months = 0, userstate) {
   var user = { name: username, months: months };
   var query = { name: channel };
-  
+  var subscription = {
+    channelName: channel
+  };
   User.findOneOrCreate(user.name)
     .then((user) => {
+      subscription.user = user._id
       return Channel.update(query, { $push: { subscribers: user._id }, $inc: { subcount: 1}});
     })
     .then((ch) => {
       return Channel.findOne(query);
     })
     .then((ch) => {
+      subscription.channel = ch._id
       return User.update({ name: username }, { $push: { channels: ch._id }});
+    })
+    .then(() => {
+      return Subscription.findOne(subscription)
+        .then((sub) => {
+          if(!sub) {
+            subscription.started = Date.now()
+            return Subscription.create(subscription)
+          } else {
+            return Subscription.update(subscription)
+          }
+        })
     })
     .catch(console.log);
 };
@@ -37,6 +53,7 @@ exports.checkStatus = function(channel, state) {
 
 exports.handleCheer = function(channel, userstate, message = '') {
   var user = { name: userstate['display-name'] }
+  console.log('our user: ', user)
   User.findOneOrCreate(user)
     .then((res) => {
       user = res;

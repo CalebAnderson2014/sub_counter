@@ -7,15 +7,18 @@ export default class Channel extends React.Component {
     super();
 
     this.state = {
-      displayInfo: false
+      show: {
+        list: true,
+        panel: false
+      }
     };
     this.toggleInfo = this.toggleInfo.bind(this);
   }
 
-  toggleInfo() {
-    this.setState({
-      displayInfo: !this.state.displayInfo
-    });
+  toggleInfo(e) {
+    console.log(e.target.className)
+    const newState = e.target.className === 'toggleRecent' ? { list: !this.state.show.list } : { panel: !this.state.show.panel };
+    this.setState({show: newState});
   }
 
   render() {
@@ -25,9 +28,10 @@ export default class Channel extends React.Component {
       <div key={channel._id}>
         <h3>{channel.name}</h3>
         <p>{channel.subcount} subscribers recorded since {moment(channel.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
-        <button onClick={this.toggleInfo}>Show recent subs</button>
-        {this.state.displayInfo ? <RecentList recentSubs={channel.recent} /> : null}
-        {this.state.analytics ? <AnalyticsPanel channelData={} /> : null}
+        <button className="toggleRecent" onClick={this.toggleInfo}>Show recent subs</button>
+        {this.state.show.list ? <RecentList recentSubs={channel.recent} /> : null}
+        <button className="togglePanel" onClick={this.toggleInfo}>Show analytics</button>
+        {this.state.show.panel ? <AnalyticsPanel channelName={channel.name} channelData={[]} /> : null}
       </div>
     );        
   }

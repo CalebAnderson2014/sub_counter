@@ -4,7 +4,7 @@ var ChannelModel = require('../../db/models/channel.js');
 var ChannelController = require('../../db/controllers/channel.js');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/sub_count6-15-17');
+mongoose.connect('mongodb://localhost/sub_count_test');
 // define the home page route
 router.get('/', function(req, res) {
   console.log(req.url);
@@ -28,4 +28,14 @@ router.get('/:channelName', function(req, res) {
     })
     .catch(res.error);
 });
+
+router.get('/:channelName/daily', function(req, res) {
+  console.log('channel name: ', req.params.channelName);
+  ChannelController.getSubsPerDay('#' + req.params.channelName)
+    .then((subs) => {
+      res.send(JSON.stringify(subs));
+    })
+    .catch(res.error);
+});
+
 module.exports = router;

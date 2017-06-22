@@ -21,6 +21,7 @@
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.18.1",
     "mongoose": "^4.10.6",
+    "prop-types": "^15.5.10",
     "react": "^15.6.0",
     "react-dom": "^15.6.0",
     "tmi.js": "^1.2.1",

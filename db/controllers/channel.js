@@ -1,6 +1,9 @@
 'use strict';
 const Channel = require('../models/channel.js');
 const User = require('../models/user.js');
+const Subscription = require('../models/subscription.js');
+const moment = require('moment');
+
 
 exports.findAll = function() {
   return Channel.find({});
@@ -37,7 +40,6 @@ exports.getNewSubs = function(channelName) {
         if (err) {
           reject(err);
         }
-        console.log('~~~~~~~channel subs: ', channel.subscribers);
         resolve(channel.subscribers);
       });
   });
@@ -59,6 +61,32 @@ exports.getAllNewest5Subs = function() {
       });
   });
 };
+
+exports.getSubsPerDay = function(channelName) {
+
+  return Subscription.find({ channelName: channelName })
+    .then((subs) => {
+      console.log(subs);
+      return subs.reduce((calendar, sub) => {
+        var date = moment(sub.updated);
+        var month = date.get('month')
+        var year = date.get('year')
+        var day = date.get('date')
+        if(!calendar[year]) {
+          calendar[year] = {}
+        }
+        if(!calendar[year][month]) {
+          calendar[year][month] = {}
+        }
+        if(!calendar[year][month][day]) {
+          calendar[year][month][day] = 0;
+        } 
+        calendar[year][month][day] += 1;
+        
+        return calendar
+      }, {})
+    })
+}
 
 exports.findSharedSubs = function() {};
 
