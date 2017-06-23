@@ -9,6 +9,7 @@ const subscriptionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Channel'
   },
+  userName: String,
   channelName: String,
   started: { type: Date },
   updated: { type: Date, default: Date.now },

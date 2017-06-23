@@ -8,11 +8,17 @@ export default class Channel extends React.Component {
 
     this.state = {
       show: {
-        list: true,
+        list: false,
         panel: false
       }
     };
+
     this.toggleInfo = this.toggleInfo.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // socket.emit('room', { room: nextProps.channel.name })
+
   }
 
   toggleInfo(e) {
@@ -27,6 +33,7 @@ export default class Channel extends React.Component {
     return (
       <div key={channel._id}>
         <h3>{channel.name}</h3>
+        <label>Newest sub</label> {this.props.latest[channel.name]['userName']}
         <p>{channel.subcount} subscribers recorded since {moment(channel.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
         <button className="toggleRecent" onClick={this.toggleInfo}>Show recent subs</button>
         {this.state.show.list ? <RecentList recentSubs={channel.recent} /> : null}

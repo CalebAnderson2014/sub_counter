@@ -1,10 +1,10 @@
 import React from 'react';
 import Channel from './Channel.js';
 
-export default ({ channels }) => {
+export default ({ children }) => {
   return (
     <div>
-      {channels.map(channel => <Channel key={channel._id} channel={channel} />)} 
+      {children}
     </div>
   );
 };

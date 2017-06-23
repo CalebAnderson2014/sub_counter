@@ -19,8 +19,10 @@ const userSchema = new mongoose.Schema({
 
 const UserModel = mongoose.model('User', userSchema);
 UserModel.findOneOrCreate = function(username) {
+  console.log('finding by ', username)
   return UserModel.findOne({ name: username })
     .then((user) => {
+      console.log('our user is ', user)
       return !!user ? user : UserModel.create({name: username});
     })
 }

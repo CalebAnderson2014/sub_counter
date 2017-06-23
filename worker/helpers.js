@@ -4,13 +4,13 @@ const Cheer = require('../db/models/cheer.js');
 const Subscription = require('../db/models/subscription.js');
 
 exports.handleSubEvent = function(channel, username, method, message, userstate) {
-  console.log('our userstate: ', arguments)
-  addSub(channel, username, 0, userstate)
+  console.log('our userstate: SUB EVENT', arguments)
+  return addSub(channel, username, 0, userstate)
 };
 
 exports.handleReSubEvent = function(channel, username, months, message, userstate, methods) {
-  console.log(arguments)
-  addSub(channel, username, months, userstate)
+  console.log('RESUB EVENT: ', arguments)
+  return addSub(channel, username, months, userstate)
 };
 
 function addSub(channel, username, months, userstate) {
@@ -18,9 +18,11 @@ function addSub(channel, username, months, userstate) {
   var user = { name: username, months: months };
   var query = { name: channel };
   var subscription = {
-    channelName: channel
+    channelName: channel,
+    userName: username
   };
-  User.findOneOrCreate(user.name)
+
+  return User.findOneOrCreate(user.name)
     .then((user) => {
       subscription.user = user._id
       return Channel.update(query, { $push: { subscribers: user._id }, $inc: { subcount: 1}});
@@ -43,10 +45,11 @@ function addSub(channel, username, months, userstate) {
           }
         })
     })
-    .catch(console.log);
+    .then(() => subscription)
 };
 
 exports.checkStatus = function(channel, state) {
+
   Channel.findOneOrCreate(channel)
     .then(giveStatusReport)
     .catch(console.log)
@@ -56,7 +59,7 @@ exports.handleCheer = function(channel, userstate, message) {
   var message = message || '';
   var user = { name: userstate['display-name'] }
   console.log('our user: ', user)
-  User.findOneOrCreate(user.name)
+  return User.findOneOrCreate(user.name)
     .then((res) => {
       user = res;
       return Channel.findOne({ name: channel })
@@ -70,6 +73,11 @@ exports.handleCheer = function(channel, userstate, message) {
     .catch(console.log)
 };
 
+function joinRoom(channelName) {
+  socket.on('room', function(data) {
+    socket.join(data.room);
+  });
+}
 function giveStatusReport(channel) {
   console.log('Status update for ' + channel.name);
   console.log('Subcount: ', channel.subcount);
