@@ -3,12 +3,12 @@ const User = require('../db/models/user.js');
 const Cheer = require('../db/models/cheer.js');
 const Subscription = require('../db/models/subscription.js');
 
-exports.handleSubEvent = function(channel, username, method, message, userstate) {
+exports.handleSubEvent = function(channel, username, userstate, message, methods, months) {
   console.log('our userstate: SUB EVENT', arguments)
   return addSub(channel, username, 0, userstate)
 };
 
-exports.handleReSubEvent = function(channel, username, months, message, userstate, methods) {
+exports.handleReSubEvent = function(channel, username, userstate, message, methods, months) {
   console.log('RESUB EVENT: ', arguments)
   return addSub(channel, username, months, userstate)
 };
@@ -55,7 +55,7 @@ exports.checkStatus = function(channel, state) {
     .catch(console.log)
 };
 
-exports.handleCheer = function(channel, userstate, message) {
+exports.handleCheer = function(channel, username, userstate, message, methods, months) {
   var message = message || '';
   var user = { name: userstate['display-name'] }
   console.log('our user: ', user)

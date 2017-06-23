@@ -33,7 +33,7 @@ export default class Channel extends React.Component {
     return (
       <div key={channel._id}>
         <h3>{channel.name}</h3>
-        <label>Newest sub</label> {this.props.latest[channel.name]['userName']}
+        <label>Newest sub</label> {this.props.latest[channel.name]['sub']['userName']}
         <p>{channel.subcount} subscribers recorded since {moment(channel.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>
         <button className="toggleRecent" onClick={this.toggleInfo}>Show recent subs</button>
         {this.state.show.list ? <RecentList recentSubs={channel.recent} /> : null}

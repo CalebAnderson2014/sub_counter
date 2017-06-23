@@ -7,7 +7,6 @@ var cardAPI = require('./routers/card_router.js');
 var routes = express.Router();
 
 app.use(cors());
-
 routes.use(express.static(path.join(__dirname, '../client/public')));
 
 routes.get('/app-bundle.js',

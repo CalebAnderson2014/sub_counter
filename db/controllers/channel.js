@@ -25,14 +25,15 @@ exports.getChannelSubs = function(channelName) {
     });
 };
 
-exports.getNewSubs = function(channelName) {
+exports.getNewSubs = function(channelName, amount) {
+  var amount = amount || 1
   console.log('getting new subs for: ', channelName);
   return new Promise((resolve, reject) => {
     Channel.findOne({ name: channelName })
       .populate({
         path: 'subscribers',
         options: {
-          limit: 15,
+          limit: amount,
           sort: { 'createdAt': -1 }
         } 
       })
@@ -40,6 +41,7 @@ exports.getNewSubs = function(channelName) {
         if (err) {
           reject(err);
         }
+        console.log('resolving')
         resolve(channel.subscribers);
       });
   });
