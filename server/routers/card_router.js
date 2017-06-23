@@ -7,7 +7,6 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/sub_count2');
 // define the home page route
 router.get('/', function(req, res) {
-  console.log(req.url);
   ChannelModel.
     find({}).
     sort('-subcount').
@@ -21,7 +20,6 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:channelName', function(req, res) {
-  console.log('channel name: ', req.params.channelName);
   ChannelController.getNewSubs('#' + req.params.channelName)
     .then((subs) => {
       res.send(JSON.stringify(subs));
