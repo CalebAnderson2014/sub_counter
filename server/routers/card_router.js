@@ -20,7 +20,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:channelName', function(req, res) {
-  ChannelController.getNewSubs('#' + req.params.channelName)
+  ChannelController.getNewSubs('#' + req.params.channelName, req.query.amount)
     .then((subs) => {
       res.send(JSON.stringify(subs));
     })

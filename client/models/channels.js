@@ -7,9 +7,9 @@ export function fetchAllChannels() {
     .then(data => data.json());
 }
 
-export function channelsNewSubs(channelName) {
+export function channelsNewSubs(channelName, amount) {
   const noPound = channelName.split('').filter(char => char !== '#').join('');
-  return fetch(SERVER_URL + noPound)
+  return fetch(SERVER_URL + noPound + '?amount=' + amount )
     .then(data => data.json());
 }
 
