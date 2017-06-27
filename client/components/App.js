@@ -18,7 +18,7 @@ export default class App extends React.Component {
     };
   }
   componentDidMount() {
-    Promise.all(this.props.channels.map((ch) => ChannelModel.channelsNewSubs(ch.name)))
+    Promise.all(this.props.channels.map((ch) => ChannelModel.channelsNewSubs(ch.name, 10)))
       .then((arr) => {
         const newState = this.state.channels.map((channel, i) => {
           channel.recent = arr[i];
