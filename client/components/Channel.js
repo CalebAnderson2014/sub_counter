@@ -34,6 +34,7 @@ export default class Channel extends React.Component {
     return (
       <div key={channel._id}>
         <h3>{channel.name}</h3>
+        <img style={{height: '35px', width: '35px'}}src={channel.info ? channel.info.logo : null} />
         <label>Newest sub</label> {latest['sub']['userName']}
         {latest['cheer']['userName'] ? latest['cheer']['userName']['display-name'] + ' cheered: ' + latest['cheer']['userName']['bits'] : null}
         <p>{channel.subcount} subscribers recorded since {moment(channel.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}</p>

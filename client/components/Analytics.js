@@ -22,7 +22,6 @@ export default class AnalyticsPanel extends React.Component {
   render() {
     return (
       <div>
-        <h4>Wow a panel!</h4>
         <VictoryChart>
           <VictoryLine
             data={this.state.data}
