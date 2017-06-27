@@ -22,9 +22,9 @@ const ChannelModel = mongoose.model('Channel', channelSchema);
 ChannelModel.findOneOrCreate = function(channelName) {
   return ChannelModel.findOne({ name: channelName })
     .then((channel) => {
-      return !!channel ? channel: ChannelModel.create({name: channelName});
-    })
-}
+      return !!channel ? channel : ChannelModel.create({name: channelName});
+    });
+};
 
 module.exports = ChannelModel;
 

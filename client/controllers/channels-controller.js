@@ -19,7 +19,7 @@ exports.formatSubsPerDay = function(channelName) {
                 day = s
                 s--
               }
-              results.push({ date: `${month}/${day}/${year}`, count: subCount })
+              results.unshift({ date: `${month}/${day}/${year}`, count: subCount })
             } else if(calendar[year - 1]) {
               subCount = calendar[year - 1][12][31]
             } else {
