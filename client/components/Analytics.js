@@ -25,6 +25,9 @@ export default class AnalyticsPanel extends React.Component {
         <VictoryChart>
           <VictoryLine
             data={this.state.data}
+            fixLabelOverlap={true}
+            labels={(datum) => { console.log(datum.y); return datum.y}}
+            style={{ data: { stroke: "red" }}}
             x="date"
             y="count"
             domain={{y: [0, 1000]}}
